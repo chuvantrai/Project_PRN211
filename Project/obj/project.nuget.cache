@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Rv6WG56UWJSEW3s4/93nhSZ7SwS/y17Y+pKm9G9XZFlmuNULkz7FuXhYlQn/va7wW6JaU+3W1ns5hXic+L1P+w==",
+  "dgSpecHash": "FyUF0cDXCAOHB1kyaEZCNc4Y7iNszV+QAsaiMYMEwI/u044ccaXiaVRDIMn9TaUGQv6fa7IVw8AgXdrQr+gCtw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\03623\\OneDrive\\Máy tính\\IT\\PRN211\\Code_Cshap\\Project\\Project.csproj",
+  "projectFilePath": "C:\\Users\\03623\\OneDrive\\Máy tính\\Project_PRN\\Project_PRN211\\Project\\Project.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\03623\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\03623\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
@@ -84,7 +84,7 @@
     "C:\\Users\\03623\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
     "C:\\Users\\03623\\.nuget\\packages\\system.security.cryptography.cng\\4.5.0\\system.security.cryptography.cng.4.5.0.nupkg.sha512",
     "C:\\Users\\03623\\.nuget\\packages\\system.security.cryptography.primitives\\4.3.0\\system.security.cryptography.primitives.4.3.0.nupkg.sha512",
-    "C:\\Users\\03623\\.nuget\\packages\\system.security.cryptography.protecteddata\\4.7.0\\system.security.cryptography.protecteddata.4.7.0.nupkg.sha512",
+    "C:\\Users\\03623\\.nuget\\packages\\system.security.cryptography.protecteddata\\5.0.0\\system.security.cryptography.protecteddata.5.0.0.nupkg.sha512",
     "C:\\Users\\03623\\.nuget\\packages\\system.security.permissions\\4.7.0\\system.security.permissions.4.7.0.nupkg.sha512",
     "C:\\Users\\03623\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
     "C:\\Users\\03623\\.nuget\\packages\\system.security.securestring\\4.3.0\\system.security.securestring.4.3.0.nupkg.sha512",

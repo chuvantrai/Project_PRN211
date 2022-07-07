@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\03623\\OneDrive\\Máy tính\\IT\\PRN211\\Code_Cshap\\Project\\Project.csproj": {}
+    "C:\\Users\\03623\\OneDrive\\Máy tính\\Project_PRN\\Project_PRN211\\Project\\Project.csproj": {}
   },
   "projects": {
-    "C:\\Users\\03623\\OneDrive\\Máy tính\\IT\\PRN211\\Code_Cshap\\Project\\Project.csproj": {
+    "C:\\Users\\03623\\OneDrive\\Máy tính\\Project_PRN\\Project_PRN211\\Project\\Project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\03623\\OneDrive\\Máy tính\\IT\\PRN211\\Code_Cshap\\Project\\Project.csproj",
+        "projectUniqueName": "C:\\Users\\03623\\OneDrive\\Máy tính\\Project_PRN\\Project_PRN211\\Project\\Project.csproj",
         "projectName": "Project",
-        "projectPath": "C:\\Users\\03623\\OneDrive\\Máy tính\\IT\\PRN211\\Code_Cshap\\Project\\Project.csproj",
+        "projectPath": "C:\\Users\\03623\\OneDrive\\Máy tính\\Project_PRN\\Project_PRN211\\Project\\Project.csproj",
         "packagesPath": "C:\\Users\\03623\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\03623\\OneDrive\\Máy tính\\IT\\PRN211\\Code_Cshap\\Project\\obj\\",
+        "outputPath": "C:\\Users\\03623\\OneDrive\\Máy tính\\Project_PRN\\Project_PRN211\\Project\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\03623\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -49,6 +49,10 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[5.0.17, )"
+            },
+            "System.Security.Cryptography.ProtectedData": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             }
           },
           "imports": [
