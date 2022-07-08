@@ -18,6 +18,7 @@ namespace Project.Models
         }
 
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<ImageProduct> ImageProducts { get; set; }
         public virtual DbSet<News> News { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Regional> Regionals { get; set; }
@@ -47,15 +48,30 @@ namespace Project.Models
                     .HasMaxLength(250);
             });
 
+            modelBuilder.Entity<ImageProduct>(entity =>
+            {
+                entity.HasKey(e => e.ImgId);
+
+                entity.ToTable("ImageProduct");
+
+                entity.Property(e => e.ImgName)
+                    .IsRequired()
+                    .HasMaxLength(250);
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.ImageProducts)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ImageProduct_Product");
+            });
+
             modelBuilder.Entity<News>(entity =>
             {
                 entity.Property(e => e.Content).IsRequired();
 
                 entity.Property(e => e.DateUp).HasColumnType("date");
 
-                entity.Property(e => e.ImgAvar)
-                    .IsRequired()
-                    .HasColumnType("image");
+                entity.Property(e => e.ImgAvar).HasMaxLength(255);
 
                 entity.Property(e => e.Title)
                     .IsRequired()
@@ -70,9 +86,7 @@ namespace Project.Models
 
                 entity.Property(e => e.Description).IsRequired();
 
-                entity.Property(e => e.ImgAvar)
-                    .IsRequired()
-                    .HasColumnType("image");
+                entity.Property(e => e.ImgAvar).HasMaxLength(250);
 
                 entity.Property(e => e.LetterPrice)
                     .IsRequired()
@@ -129,7 +143,7 @@ namespace Project.Models
                     .IsRequired()
                     .HasMaxLength(250);
 
-                entity.Property(e => e.ImgAvar).HasColumnType("image");
+                entity.Property(e => e.ImgAvar).HasMaxLength(250);
 
                 entity.Property(e => e.Password)
                     .IsRequired()

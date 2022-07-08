@@ -11,6 +11,6 @@ namespace Project.Models
         public string Title { get; set; }
         public string Content { get; set; }
         public DateTime DateUp { get; set; }
-        public byte[] ImgAvar { get; set; }
+        public string ImgAvar { get; set; }
     }
 }

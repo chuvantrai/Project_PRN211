@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Project.Models;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -58,7 +59,7 @@ namespace Project.Controllers
             ViewBag.thongbao = "Hãy xác nhận trong Mail của bạn!";
             string codeMail = Logic.coding.Encode(mail);
             string ndEmail =
-                @"Bấm xác nhận để đăng ký tài khoản: <a href='http://localhost:5827/nguoidung/dangkythongtin?mail=" + codeMail + "' style='color: green;'>Xác Nhận</a>";
+                @"Bấm xác nhận để đăng ký tài khoản: <a href='http://localhost:64224/nguoidung/dangkythongtin?mail=" + codeMail + "' style='color: green;'>Xác Nhận</a>";
 
             Task<string> te = Logic.SendGmail
                .SendMailGoogleSmtp("traicvhe153014@fpt.edu.vn", mail, "Xác nhận đăng ký", ndEmail, "traicvhe153014@fpt.edu.vn", "12345678");
@@ -97,7 +98,7 @@ namespace Project.Controllers
         {
             return View("/Views/User/ResetPassword.cshtml");
         }
-            public IActionResult Randommatkhau(string mail)
+        public IActionResult Randommatkhau(string mail)
         {
             if (context.Users.Where(x=>x.Email.Equals(mail)).Count()==0) {
                 ViewBag.thongbao = "Email sai!";
@@ -144,6 +145,7 @@ namespace Project.Controllers
                 user.Password = Logic.coding.Encode(newpassword1);
                 context.Users.Update(user);
                 context.SaveChanges();
+                HttpContext.Session.Remove("useraccount");
                 ViewBag.thongbao = "Đổi mật khẩu thành công";
                 
             }
@@ -151,12 +153,33 @@ namespace Project.Controllers
         }
         public IActionResult Thongtincanhan()
         {
-            string jsonStr = HttpContext.Session.GetString("useraccount");
-            User c;
-            if (jsonStr is null) c = new User();
-            else c = JsonConvert.DeserializeObject<User>(jsonStr);
-            ViewBag.User = c;
             return View("/Views/User/Profile.cshtml");
         }
+        [HttpPost]
+        public IActionResult DoThongtincanhan(IFormFile myfile,string fullname, string phone,DateTime dob,bool gender)
+        {
+            string jsonStr = HttpContext.Session.GetString("useraccount");
+            User user = null;
+            if (jsonStr != null) user = JsonConvert.DeserializeObject<User>(jsonStr);
+
+            string _FileName = Logic.ExtensionFile.AddandUploadImgae(myfile,user);// add image
+
+            if (_FileName != null)
+            {
+                // lưu name file vao database
+                user.ImgAvar = _FileName;
+            }
+                user.FullName = fullname; user.Phone = phone; user.Dob = dob; user.Gender = gender;
+                context.Users.Update(user);
+                context.SaveChanges();
+
+                // set session mới
+                string jsonStr2 = JsonConvert.SerializeObject(user);
+                HttpContext.Session.SetString("useraccount", jsonStr2);
+            
+            ViewBag.thongbao = "Cập nhật thông tin thành công!";
+            return View("/Views/User/Profile.cshtml");
+        }
+        
     }
 }

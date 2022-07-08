@@ -20,7 +20,7 @@ namespace Project.Models
         public DateTime Dob { get; set; }
         public bool Gender { get; set; }
         public int RoleId { get; set; }
-        public byte[] ImgAvar { get; set; }
+        public string ImgAvar { get; set; }
 
         public virtual Role Role { get; set; }
         public virtual ICollection<UserRequest> UserRequests { get; set; }
