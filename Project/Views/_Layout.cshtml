@@ -24,7 +24,7 @@
 	<link href="~/css/home.css" rel="stylesheet" type="text/css" />
 	
 </head>
-<body>
+<body style="background-color: #eee">
 	@{
 		string jsonStr = Context.Session.GetString("useraccount");
 		User user =null;
@@ -48,7 +48,7 @@
 					<a class="nav-link" href="#">Bất động sản</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Tin Tức</a>
+					<a class="nav-link" href="/tintuc">Tin Tức</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#">Tư Vấn/Hỗ Trợ</a>

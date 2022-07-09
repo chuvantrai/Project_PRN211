@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Thêm tin tức</title>
+	<title>Thêm bất động sản</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<!-- Required meta tags -->
 	<!-- css bootstrap 4 -->
@@ -34,7 +34,8 @@
 		string jsonStr = Context.Session.GetString("useraccount");
 		User user = null;
 		if (jsonStr != null) user = JsonConvert.DeserializeObject<User>(jsonStr);
-
+		List<Category> listcate = ViewBag.ListCategory;
+		List<Regional> listregi = ViewBag.ListRegional;
 	}
 	<nav class="navbar navbar-expand-lg navbar-light" style="background-color:#e3f2fd;">
 		<a class="navbar-brand" href="/trangchu">LOGO</a>
@@ -135,23 +136,61 @@
 	}
 	<div class="container" style="margin-top: 20px">
 		<div class="col-md-12 shadow p-3 mb-5 bg-light rounded">
-			<h3>Thêm Tin Tức mới vào trang web</h3>
-			<form action="/tintucadmin/ThemTinTuc" method="POST" enctype="multipart/form-data">
+			<h3>Thêm thông tin Bất động sản</h3>
+			<form action="/batdongsanadmin/Thembatdongsan" method="POST" enctype="multipart/form-data">
 				<div class="form-row">
 					<div class="form-group col-md-8">
-						<label for="inputEmail4">Tiêu đề tin tức</label>
+						<label for="inputEmail4">Tên bất động sản</label>
 						<input type="text" class="form-control" id="inputEmail4" name="title" required>
 					</div>
-					<div class="form-group col-md-4">
-						<label for="inputPassword4">Ngày của tin tức</label>
-						<input type="date" class="form-control" id="inputPassword4" name="date">
+					<div class="form-group col-md-2">
+						<label for="inputPassword4">Loại BĐS</label>
+						<select name="category" class="custom-select col-12" id="inlineFormCustomSelectPref">
+							@foreach (Category c in listcate)
+							{
+								<option value="@c.CategoryId" >@c.CategoryName</option>
+							}
+						</select>
+					</div>
+					<div class="form-group col-md-2">
+						<label for="inputPassword4">Khu vực BĐS</label>
+						<select name="regional" class="custom-select col-12" id="inlineFormCustomSelectPref">
+							@foreach (Regional r in listregi)
+							{
+								<option value="@r.RegionalId" >@r.RegionalName</option>
+							}
+						</select>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="exampleFormControlTextarea1">Nội dung tin tức:</label>
+					<label for="exampleFormControlTextarea1">Thông tin chi tiết:</label>
 					<div class="card-body">
 						<textarea id="summernote" name="content" required>
 					</textarea>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inputEmail4">*Giá bằng chữ</label>
+						<input type="text" class="form-control" id="inputEmail4" name="letterprice" required>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputEmail4">*Giá bằng số</label>
+						<input type="number" class="form-control" id="inputEmail4" name="noprice" required>
+					</div>
+				</div>
+				<div class="form-group col-md-11">
+					<label for="inputEmail4">*Link GG Map</label>
+					<input type="text" class="form-control" id="inputEmail4" name="linkggmap">
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inputEmail4">*Diện tính (m&sup2;)</label>
+						<input type="number" class="form-control" id="inputEmail4" name="area" required>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputEmail4">*Mặt tiền (mét)</label>
+						<input type="number" class="form-control" id="inputEmail4" name="horizontal" required>
 					</div>
 				</div>
 				<div class="form-group col-md-12">
@@ -161,7 +200,7 @@
 				<div style="padding-bottom: 25px;"> <button type="submit" class="btn btn-primary btn-lg">Thêm</button></div>
 
 			</form>
-		</div>
+	</div>
 	</div>
 
 

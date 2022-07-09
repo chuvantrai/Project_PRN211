@@ -1,0 +1,162 @@
+﻿@using Project.Models
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+	ViewBag.Title = "Bất động sản Nha Trang";
+	Layout = "~/Views/_Layout.cshtml";
+	List<Category> listcate = ViewBag.ListCate;
+	List<Regional> listregi = ViewBag.ListRegi;
+	int cate = ViewBag.Cate;
+	int regi = ViewBag.Regi;
+	List<Product> ListPro= ViewBag.ListPro;
+}
+
+@{
+	List<Product> NewsList = ViewBag.ProductList;
+}
+<link href="~/css/Product.css" rel="stylesheet" type="text/css" />
+<div class="wrapper">
+	<form action="tatca" method="GET" id="searchFrm">
+		<div class="d-lg-flex align-items-lg-center pt-2">
+			<div class="form-inline d-flex align-items-center my-2 mr-lg-2 radio bg-light border">
+				@foreach (Category c in listcate)
+				{
+					@if (cate == @c.CategoryId)
+					{
+						<label class="options">@c.CategoryName <input type="radio" name="category" value="@c.CategoryId" checked> <span class="checkmark"></span> </label>
+					}
+					else
+					{
+						<label class="options">@c.CategoryName <input type="radio" name="category" value="@c.CategoryId"> <span class="checkmark"></span> </label>
+					}
+				}
+				@if (cate == 0)
+				{
+					<label class="options">Tất cả <input type="radio" name="category" value="0" checked> <span class="checkmark"></span> </label>
+				}
+				else
+				{
+					<label class="options">Tất cả <input type="radio" name="category" value="0"> <span class="checkmark"></span> </label>
+				}
+			</div>
+			<div class="form-inline d-flex align-items-center my-2 checkbox bg-light border mx-lg-2">
+				<label>
+					Sắp xếp
+				</label>
+				<select name="sort" id="country" class="bg-light" onchange="this.form.submit()">
+					<option value="desdate" selected="selected">Mới nhất</option>
+					<option value="asedate">Cũ-mới</option>
+					<option value="aseprice">Giá từ thấp tới cao</option>
+					<option value="desprice">Giá từ cao tới thấp</option>
+				</select>
+			</div>
+
+		</div>
+		<section id="sidebar">
+			<div class="py-3">
+				<h5 class="font-weight-bold">Khu vực BDS</h5>
+				<ul class="list-group">
+					<label class="options">Tất cả <input type="radio" name="regional" value="" checked=""> <span class="checkmark"></span> </label>
+					@foreach (Regional r in listregi)
+					{
+						@if (regi == @r.RegionalId)
+						{
+							<label class="options">@r.RegionalName <input type="radio" name="regional" value="@r.RegionalId" checked=""> <span class="checkmark"></span> </label>
+						}
+						else
+						{
+							<label class="options">@r.RegionalName <input type="radio" name="regional" value="@r.RegionalId"> <span class="checkmark"></span> </label>
+						}
+					}
+				</ul>
+			</div>
+			<div class="py-3">
+				<h5 class="font-weight-bold">Mức giá</h5>
+				<ul class="list-group">
+					<label class="options">Tất cả <input type="radio" name="price" value="" checked="">  <span class="checkmark"></span> </label>
+					<label class="options">&lt; 500 triệu <input type="radio" name="price" value="<500"> <span class="checkmark"></span> </label>
+					<label class="options">500 - 800 triệu <input type="radio" name="price" value="500-800"> <span class="checkmark"></span> </label>
+					<label class="options">800 triệu - 1 tỷ <input type="radio" name="price" value="800-1t"> <span class="checkmark"></span> </label>
+					<label class="options">1 - 3 tỷ <input type="radio" name="price" value="1-3t"> <span class="checkmark"></span> </label>
+					<label class="options">3 - 7 tỷ <input type="radio" name="price" value="3-7t"> <span class="checkmark"></span> </label>
+					<label class="options">7 - 10 tỷ <input type="radio" name="price" value="7-10t"> <span class="checkmark"></span> </label>
+					<label class="options">10 - 20 tỷ <input type="radio" name="price" value="10-20t"> <span class="checkmark"></span> </label>
+					<label class="options">≥ 20 tỷ<input type="radio" name="price" value=">20t"> <span class="checkmark"></span> </label>
+				</ul>
+			</div>
+
+		</section> <!-- Products Section -->
+
+	</form>
+	<div class="col-mb-12">
+		<section id="products">
+			<div class="container py-3">
+				<div class="row">
+					@foreach (Product p in ListPro)
+				   {
+					   <div class="col-lg-4  col-sm-10 offset-md-0 offset-sm-1 pt-md-0  sanpham1">
+						<div class="card">
+							<img class="card-img-top" src="~/myfiles/@p.ImgAvar">
+							<div class="card-body" style="height: 185px;">
+								<i class="bi bi-star-fill" style="color: #feba45"></i> <i class="bi bi-star-fill" style="color: #feba45"></i> <i class="bi bi-star-fill" style="color: #feba45"></i> <i class="bi bi-star-fill" style="color: #feba45"></i> <i class="bi bi-star-fill" style="color: #feba45"></i>
+								<span style="color: #aaa;float: right; font-size: 14px"><i class="bi bi-geo-alt-fill"></i> @p.Category.CategoryName </span>
+								<h6 class="font-weight-bold pt-1">
+									<div style="height: 58px;overflow:hidden;">
+										#@p.ProductId.@p.ProductName
+									</div>
+								</h6>
+								<div class="d-flex align-items-center product"> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star"></span> </div>
+								<div class="d-flex align-items-center justify-content-between pt-3">
+									<div class="d-flex flex-column">
+										<div class="h6 font-weight-bold">@p.LetterPrice <i class="bi bi-cash-coin" style="color: #49be25"></i></div>
+
+									</div>
+									<a href="" style="text-decoration: none;"><div class="btn btn-outline-primary">Xem</div></a>
+
+
+									<a href="" style="text-decoration: none;" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></a>
+									<a href="" style="text-decoration: none;" class="btn btn-outline-success"><i class="bi bi-pencil-square"></i></a>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				   }
+				</div>
+			</div>
+		</section>
+		
+	</div>
+	<!--        </div>-->
+	<nav aria-label="..." style="margin-top: 850px;margin-left: 480px;">
+			<ul class="pagination">
+				@if(ViewBag.PageEnd!=0){
+						@if(ViewBag.PageIndex>2){
+						<li class="page-item">
+							<a class="page-link" href="/tintuc/danhsach?Pageindex=1&sort=@ViewBag.sort&search=@ViewBag.search">Đầu</a>
+						</li>
+						}
+						
+						@if (ViewBag.PageIndex !=1){int j =ViewBag.PageIndex-1;
+							<li class="page-item"><a class="page-link" href="/tintuc/danhsach?Pageindex=@j&sort=@ViewBag.sort&search=@ViewBag.search">@j</a></li>
+						}
+						
+						<li class="page-item active" aria-current="page">
+							<a class="page-link" href="">@ViewBag.PageIndex</a>
+						</li>
+
+						@if (ViewBag.PageIndex != ViewBag.PageEnd){int i =ViewBag.PageIndex+1;
+							<li class="page-item"><a class="page-link" href="/tintuc/danhsach?Pageindex=@i&sort=@ViewBag.sort&search=@ViewBag.search"> @i</a></li>
+						}
+						
+						@if (ViewBag.PageIndex <= ViewBag.PageEnd-1){
+							<li class="page-item">
+								<a class="page-link" href="/tintuc/danhsach?Pageindex=@ViewBag.PageEnd&sort=@ViewBag.sort&search=@ViewBag.search">Cuối</a>
+							</li>
+						}
+						}
+			</ul>
+		</nav>
+</div>
+
