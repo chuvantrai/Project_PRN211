@@ -16,8 +16,15 @@
 	List<Product> NewsList = ViewBag.ProductList;
 }
 <link href="~/css/Product.css" rel="stylesheet" type="text/css" />
+<script>
+            function submitData()
+            {
+                document.getElementById("searchFrm").submit();
+            }
+
+</script>
 <div class="wrapper">
-	<form action="tatca" method="GET" id="searchFrm">
+	<form action="/batdongsan" method="GET" id="searchFrm" onchange="submitData();">
 		<div class="d-lg-flex align-items-lg-center pt-2">
 			<div class="form-inline d-flex align-items-center my-2 mr-lg-2 radio bg-light border">
 				@foreach (Category c in listcate)
@@ -45,10 +52,10 @@
 					Sắp xếp
 				</label>
 				<select name="sort" id="country" class="bg-light" onchange="this.form.submit()">
-					<option value="desdate" selected="selected">Mới nhất</option>
-					<option value="asedate">Cũ-mới</option>
-					<option value="aseprice">Giá từ thấp tới cao</option>
-					<option value="desprice">Giá từ cao tới thấp</option>
+					@if (ViewBag.sort == "desdate"||ViewBag.sort ==""){<option value="desdate" selected>Mới nhất</option>}else{<option value="desdate">Mới nhất</option>}
+					@if (ViewBag.sort == "asedate"){<option value="asedate" selected>Cũ-mới</option>}else{<option value="asedate">Cũ-mới</option>}
+					@if (ViewBag.sort == "aseprice"){<option value="aseprice" selected>Giá từ thấp tới cao</option>}else{<option value="aseprice">Giá từ thấp tới cao</option>}
+					@if (ViewBag.sort == "desprice"){<option value="desprice" selected>Giá từ cao tới thấp</option>}else{<option value="desprice">Giá từ cao tới thấp</option>}
 				</select>
 			</div>
 
@@ -74,15 +81,33 @@
 			<div class="py-3">
 				<h5 class="font-weight-bold">Mức giá</h5>
 				<ul class="list-group">
-					<label class="options">Tất cả <input type="radio" name="price" value="" checked="">  <span class="checkmark"></span> </label>
-					<label class="options">&lt; 500 triệu <input type="radio" name="price" value="<500"> <span class="checkmark"></span> </label>
-					<label class="options">500 - 800 triệu <input type="radio" name="price" value="500-800"> <span class="checkmark"></span> </label>
-					<label class="options">800 triệu - 1 tỷ <input type="radio" name="price" value="800-1t"> <span class="checkmark"></span> </label>
-					<label class="options">1 - 3 tỷ <input type="radio" name="price" value="1-3t"> <span class="checkmark"></span> </label>
-					<label class="options">3 - 7 tỷ <input type="radio" name="price" value="3-7t"> <span class="checkmark"></span> </label>
-					<label class="options">7 - 10 tỷ <input type="radio" name="price" value="7-10t"> <span class="checkmark"></span> </label>
-					<label class="options">10 - 20 tỷ <input type="radio" name="price" value="10-20t"> <span class="checkmark"></span> </label>
-					<label class="options">≥ 20 tỷ<input type="radio" name="price" value=">20t"> <span class="checkmark"></span> </label>
+					@if ("" == @ViewBag.price||@ViewBag.price==null)
+					{ <label class="options">Tất cả <input type="radio" name="price" value="" checked>  <span class="checkmark"></span> </label>}
+					else{<label class="options">Tất cả <input type="radio" name="price" value="" >  <span class="checkmark"></span> </label>}
+					@if ("<500" == @ViewBag.price)
+					{<label class="options">&lt; 500 triệu <input type="radio" name="price" value="<500" checked> <span class="checkmark"></span> </label> }
+					else{<label class="options">&lt; 500 triệu <input type="radio" name="price" value="<500"> <span class="checkmark"></span> </label>}
+					@if ("500-800" == @ViewBag.price)
+					{ <label class="options">500 - 800 triệu <input type="radio" name="price" value="500-800" checked> <span class="checkmark"></span> </label>}
+					else{<label class="options">500 - 800 triệu <input type="radio" name="price" value="500-800"> <span class="checkmark"></span> </label>}
+					@if ("800-1t" == @ViewBag.price)
+					{<label class="options">800 triệu - 1 tỷ <input type="radio" name="price" value="800-1t" checked> <span class="checkmark"></span> </label>}
+					else{<label class="options">800 triệu - 1 tỷ <input type="radio" name="price" value="800-1t"> <span class="checkmark"></span> </label>}
+					@if ("1-3t" == @ViewBag.price)
+					{ <label class="options">1 - 3 tỷ <input type="radio" name="price" value="1-3t" checked> <span class="checkmark"></span> </label>}
+					else{<label class="options">1 - 3 tỷ <input type="radio" name="price" value="1-3t"> <span class="checkmark"></span> </label>}
+					@if ("3-7t" == @ViewBag.price)
+					{ <label class="options">3 - 7 tỷ <input type="radio" name="price" value="3-7t" checked> <span class="checkmark"></span> </label>}
+					else{<label class="options">3 - 7 tỷ <input type="radio" name="price" value="3-7t"> <span class="checkmark"></span> </label>}
+					@if ("7-10t" == @ViewBag.price)
+					{<label class="options">7 - 10 tỷ <input type="radio" name="price" value="7-10t" checked> <span class="checkmark"></span> </label> }
+					else{<label class="options">7 - 10 tỷ <input type="radio" name="price" value="7-10t"> <span class="checkmark"></span> </label>}
+					@if ("10-20t" == @ViewBag.price)
+					{<label class="options">10 - 20 tỷ <input type="radio" name="price" value="10-20t" checked> <span class="checkmark"></span> </label> }
+					else{<label class="options">10 - 20 tỷ <input type="radio" name="price" value="10-20t"> <span class="checkmark"></span> </label>}
+					@if (">20t" == @ViewBag.price)
+					{<label class="options">≥ 20 tỷ<input type="radio" name="price" value=">20t" checked> <span class="checkmark"></span> </label> }
+					else{<label class="options">≥ 20 tỷ<input type="radio" name="price" value=">20t"> <span class="checkmark"></span> </label>}
 				</ul>
 			</div>
 
@@ -100,7 +125,7 @@
 							<img class="card-img-top" src="~/myfiles/@p.ImgAvar">
 							<div class="card-body" style="height: 185px;">
 								<i class="bi bi-star-fill" style="color: #feba45"></i> <i class="bi bi-star-fill" style="color: #feba45"></i> <i class="bi bi-star-fill" style="color: #feba45"></i> <i class="bi bi-star-fill" style="color: #feba45"></i> <i class="bi bi-star-fill" style="color: #feba45"></i>
-								<span style="color: #aaa;float: right; font-size: 14px"><i class="bi bi-geo-alt-fill"></i> @p.Category.CategoryName </span>
+								<span style="color: #aaa;float: right; font-size: 14px"><i class="bi bi-geo-alt-fill"></i> @p.Regional.RegionalName </span>
 								<h6 class="font-weight-bold pt-1">
 									<div style="height: 58px;overflow:hidden;">
 										#@p.ProductId.@p.ProductName
@@ -112,7 +137,7 @@
 										<div class="h6 font-weight-bold">@p.LetterPrice <i class="bi bi-cash-coin" style="color: #49be25"></i></div>
 
 									</div>
-									<a href="" style="text-decoration: none;"><div class="btn btn-outline-primary">Xem</div></a>
+									<a href="/batdongsan/chitiet?id=@p.ProductId" style="text-decoration: none;"><div class="btn btn-outline-primary">Xem</div></a>
 
 
 									<a href="" style="text-decoration: none;" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></a>
@@ -134,12 +159,12 @@
 				@if(ViewBag.PageEnd!=0){
 						@if(ViewBag.PageIndex>2){
 						<li class="page-item">
-							<a class="page-link" href="/tintuc/danhsach?Pageindex=1&sort=@ViewBag.sort&search=@ViewBag.search">Đầu</a>
+							<a class="page-link" href="/batdongsan?Pageindex=1&sort=@ViewBag.sort&category=@ViewBag.Cate&regional=@ViewBag.Regi&price=@ViewBag.price">Đầu</a>
 						</li>
 						}
 						
 						@if (ViewBag.PageIndex !=1){int j =ViewBag.PageIndex-1;
-							<li class="page-item"><a class="page-link" href="/tintuc/danhsach?Pageindex=@j&sort=@ViewBag.sort&search=@ViewBag.search">@j</a></li>
+							<li class="page-item"><a class="page-link" href="/batdongsan?Pageindex=@j&sort=@ViewBag.sort&category=@ViewBag.Cate&regional=@ViewBag.Regi&price=@ViewBag.price">@j</a></li>
 						}
 						
 						<li class="page-item active" aria-current="page">
@@ -147,12 +172,12 @@
 						</li>
 
 						@if (ViewBag.PageIndex != ViewBag.PageEnd){int i =ViewBag.PageIndex+1;
-							<li class="page-item"><a class="page-link" href="/tintuc/danhsach?Pageindex=@i&sort=@ViewBag.sort&search=@ViewBag.search"> @i</a></li>
+							<li class="page-item"><a class="page-link" href="/batdongsan?Pageindex=@i&sort=@ViewBag.sort&category=@ViewBag.Cate&regional=@ViewBag.Regi&price=@ViewBag.price"> @i</a></li>
 						}
 						
 						@if (ViewBag.PageIndex <= ViewBag.PageEnd-1){
 							<li class="page-item">
-								<a class="page-link" href="/tintuc/danhsach?Pageindex=@ViewBag.PageEnd&sort=@ViewBag.sort&search=@ViewBag.search">Cuối</a>
+								<a class="page-link" href="/batdongsan?Pageindex=@ViewBag.PageEnd&sort=@ViewBag.sort&category=@ViewBag.Cate&regional=@ViewBag.Regi&price=@ViewBag.price">Cuối</a>
 							</li>
 						}
 						}

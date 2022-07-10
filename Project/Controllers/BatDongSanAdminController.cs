@@ -44,5 +44,14 @@ namespace Project.Controllers
                 return View("/Views/Product/ProductDetail.cshtml");
             }
         }
+        public IActionResult ThemImgBDS(int id, IFormFile img)
+        {
+            ImageProduct p = new ImageProduct();
+            p.ImgName = Logic.ExtensionFile.AddnewImgae(img);
+            p.ProductId = id;
+            context.ImageProducts.Add(p);
+            context.SaveChanges();
+            return Redirect("~/batdongsan/chitiet?id="+id);
+        }
     }
 }
