@@ -52,5 +52,29 @@ namespace Project.Logic
             if (du > 0) { allpage = allpage + 1; }
             return allpage;
         }
+
+        public static List<User> PagingUser(List<User> ProductList, int Pageindex, int Pagesize)
+        {
+            if (Pageindex == 0) { Pageindex = 1; }
+            using (var context = new Bds_CShapContext())
+            {   // skip bỏ qua bn take lấy ra bn tiếp theo
+                var queryResultPage = ProductList
+                  .Skip(Pagesize * (Pageindex - 1))
+                  .Take(Pagesize);
+                List<User> NewsList2 = queryResultPage.ToList();
+                return NewsList2;
+            }
+        }
+        public static int PageEndUser(List<User> ProductList, int Pagesize)
+        {
+            if (ProductList.Count == 0)
+            {
+                return 0;
+            }
+            int allpage = ProductList.Count / Pagesize;
+            int du = ProductList.Count % Pagesize;
+            if (du > 0) { allpage = allpage + 1; }
+            return allpage;
+        }
     }
 }

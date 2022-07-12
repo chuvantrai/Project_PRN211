@@ -148,3 +148,5 @@ C:\Users\03623\OneDrive\Máy tính\Project_PRN\Project_PRN211\Project\obj\Debug\
 C:\Users\03623\OneDrive\Máy tính\Project_PRN\Project_PRN211\Project\obj\Debug\net5.0\Razor\Views\Product\ProductDetail.cshtml.g.cs
 C:\Users\03623\OneDrive\Máy tính\Project_PRN\Project_PRN211\Project\obj\Debug\net5.0\Razor\Views\Product\ProductList.cshtml.g.cs
 C:\Users\03623\OneDrive\Máy tính\Project_PRN\Project_PRN211\Project\obj\Debug\net5.0\Razor\Views\Product\Product.cshtml.g.cs
+C:\Users\03623\OneDrive\Máy tính\Project_PRN\Project_PRN211\Project\obj\Debug\net5.0\Razor\Views\User\UserRequestList.cshtml.g.cs
+C:\Users\03623\OneDrive\Máy tính\Project_PRN\Project_PRN211\Project\obj\Debug\net5.0\Razor\Views\User\UserList.cshtml.g.cs

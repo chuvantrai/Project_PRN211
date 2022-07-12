@@ -57,17 +57,20 @@
 					<li class="nav-item">
 						<a class="nav-link" data-toggle="modal" href="" data-target="#exampleModal">Tư Vấn/Hỗ Trợ</a>
 					</li>
+					@if (user.RoleId == 1)
+					{
+					<li class="nav-item dropdown">
+						<a style="color: blue" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Quyền Admin
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="/nguoidungadmin/danhsach"> <i class="bi bi-person-lines-fill"></i> Danh sách người dùng</a>
+							<a class="dropdown-item" href="/batdongsanadmin/thembatdongsan"><i class="bi bi-plus"></i><i class="bi bi-map-fill"></i> Thêm bất động sản</a>
+							<a class="dropdown-item" href="/tintucadmin/ThemTinTuc"><i class="bi bi-plus"></i><i class="bi bi-newspaper"></i> Thêm tin tức</a>
+						</div>
+					</li>
+					}
 				}
-				<li class="nav-item dropdown">
-					<a style="color: blue" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Quyền Admin
-					</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="../../listyeucau"> <i class="bi bi-reply-all-fill"></i> Yêu cầu từ khách hàng</a>
-						<a class="dropdown-item" href="/batdongsanadmin/thembatdongsan"><i class="bi bi-plus"></i><i class="bi bi-map-fill"></i> Thêm bất động sản</a>
-						<a class="dropdown-item" href="/tintucadmin/ThemTinTuc"><i class="bi bi-plus"></i><i class="bi bi-newspaper"></i> Thêm tin tức</a>
-					</div>
-				</li>
 			</ul>
 			@if (user != null)
 			{
@@ -82,7 +85,6 @@
 						{
 							<img src="~/myfiles/@user.ImgAvar" alt="User Image" style="height: 35px; width: 35px; border-radius: 25%">
 						}
-
 					</a>
 					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
 						<a class="dropdown-item" href="/nguoidung/thongtincanhan"><i class="bi bi-file-person-fill" style="font-size: 21px;"></i>Thông tin cá nhân</a>
@@ -155,6 +157,8 @@
 		//  </div>
 		//</div>
 	}
+
+
 <script>
 $(document).ready(function(){
     $('.toast').toast('show');
