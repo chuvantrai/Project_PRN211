@@ -37,7 +37,7 @@ namespace Project.Controllers
                 + "<br> <span style='color: #87D788;'>Nội dung yêu cầu:  </span>" + content ;
             Task<string> te = Logic.SendGmail
                .SendMailGoogleSmtp("traicvhe153014@fpt.edu.vn", "traicvhe153014@fpt.edu.vn", "Yêu cầu tư vấn từ khách hàng "+user.FullName, 
-               ndEmail, "traicvhe153014@fpt.edu.vn", "12345678");
+               ndEmail, "traicvhe153014@fpt.edu.vn", "0362351671");
             string thongbao = "1";
             return Redirect("/trangchu?tb="+thongbao);
         }

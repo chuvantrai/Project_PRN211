@@ -31,8 +31,8 @@ namespace Project.Controllers
             }
             else
             {
-                List<Product> pro = context.Products.ToList();
-                if(category != 0) { pro = pro.Where(x => x.CategoryId == category).ToList(); }// loai
+                List<Product> pro = context.Products.OrderByDescending(x => x.DateUp).ToList();
+                if (category != 0) { pro = pro.Where(x => x.CategoryId == category).ToList(); }// loai
                 if(regional != 0) { pro = pro.Where(x => x.RegionalId == regional).ToList(); }// khu vuc
                 if(!string.IsNullOrEmpty(sort)) {
                     pro = Logic.ExtensionProduct.FilterSort(pro,sort);// xap sep

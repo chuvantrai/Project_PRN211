@@ -1,4 +1,6 @@
-﻿@using Project.Models
+﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@using Project.Models
 @model News
 @*
 	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -6,11 +8,35 @@
 @{
 	ViewBag.Title = "Tin Tức Bất động sản Nha Trang";
 	Layout = "~/Views/_Layout.cshtml";
+
+	string jsonStr = Context.Session.GetString("useraccount");
+	User user = null;
+	if (jsonStr != null) user = JsonConvert.DeserializeObject<User>(jsonStr);
 }
 
 @{
 	List<News> NewsList = ViewBag.NewsList;
 }
+	@if (@ViewBag.thongbao != null)
+	{
+		<div class="container">
+			<div class="row"><br></div>
+			<div class="row">
+				<div class="col">
+				</div>
+				<div class="col-8">
+					<div class="alert alert-info alert-dismissible fade show" id='tempAlert' role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<strong>Thông báo</strong> @ViewBag.thongbao
+					</div>
+				</div>
+				<div class="col">
+				</div>
+			</div>
+		</div>
+	}
 <div class="container mt-5 mb-5">
 	<div class="d-flex justify-content-center row">
 		<div class="col-md-10">
@@ -43,12 +69,43 @@
 						<div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
 					</div>
 
-					<p class="text-justify text-truncate para mb-0"><ion-icon name="calendar-outline" role="img" class="md hydrated" aria-label="calendar outline"></ion-icon>  @n.DateUp<br><br></p>
+					<p class="text-justify text-truncate para mb-0"><ion-icon name="calendar-outline" role="img" class="md hydrated" aria-label="calendar outline"></ion-icon>  @n.DateUp.Day/@n.DateUp.Month/@n.DateUp.Year<br><br></p>
 				</div>
 				<div class="align-items-center align-content-center col-md-3 border-left mt-1">
 
 					<h6 style="color: red;">Đang HOT!</h6>
 					<div class="d-flex flex-column mt-4"><a class="btn btn-outline-primary" href="/tintuc?id=@n.NewsId" role="button">Xem ngay</a></div>
+						@if (user!=null&&user.RoleId == 1)
+						{
+						<div class="" style="padding-top: 20px;height: 70px;">
+                        <a class="btn btn-outline-success" href="/tintucadmin/ChinhSuaTinTuc?id=@n.NewsId" role="button">Sửa</a>
+                        <a class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal_@n.NewsId" role="button">Xóa tin</a>
+						<form method="post" action="/tintucadmin/XoaTinTuc">
+							<div class="modal-dialog modal-dialog-centered">
+							<div class="modal fade" id="exampleModal_@n.NewsId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											Bạn có chắc muốn xóa tin tức này không?
+											<input type="text" value="@n.NewsId" name="id" hidden>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+											<button type="submit" class="btn btn-primary">Có</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							</div>
+						</form>
+						</div>		
+						}			
 				</div>
 			</div>   
 		   }

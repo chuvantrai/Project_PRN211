@@ -1,4 +1,6 @@
-﻿@using Project.Models
+﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@using Project.Models
 @*
 	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -14,6 +16,9 @@
 
 @{
 	List<Product> NewsList = ViewBag.ProductList;
+	string jsonStr = Context.Session.GetString("useraccount");
+	User user = null;
+	if (jsonStr != null) user = JsonConvert.DeserializeObject<User>(jsonStr);
 }
 <link href="~/css/Product.css" rel="stylesheet" type="text/css" />
 <script>
@@ -139,14 +144,41 @@
 									</div>
 									<a href="/batdongsan/chitiet?id=@p.ProductId" style="text-decoration: none;"><div class="btn btn-outline-primary">Xem</div></a>
 
-
-									<a href="" style="text-decoration: none;" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></a>
-									<a href="" style="text-decoration: none;" class="btn btn-outline-success"><i class="bi bi-pencil-square"></i></a>
-
+									@if( user!=null&&user.RoleId==1){
+									<a style="text-decoration: none;" data-toggle="modal" data-target="#exampleModal_@p.ProductId" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></a>
+									
+									<a href="/batdongsanadmin/chinhsuabds?id=@p.ProductId" style="text-decoration: none;" class="btn btn-outline-success"><i class="bi bi-pencil-square"></i></a>
+									}
+									
 								</div>
 							</div>
 						</div>
 					</div>
+					@*xóa*@
+					<form method="post" action="/batdongsanadmin/Xoabds">
+										<div class="modal-dialog modal-dialog-centered">
+										<div class="modal fade" id="exampleModal_@p.ProductId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+														Bạn có chắc muốn xóa sản phẩm này không?
+														<input type="text" value="@p.ProductId" name="id" hidden>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+														<button type="submit" class="btn btn-primary">Có</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										</div>
+					</form>
 				   }
 				</div>
 			</div>

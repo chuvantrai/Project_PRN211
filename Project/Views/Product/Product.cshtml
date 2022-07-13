@@ -1,4 +1,6 @@
-﻿@using Project.Models
+﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@using Project.Models
 @{
     ViewBag.Title = "Bất động sản Nha Trang";
     Layout = "~/Views/_Layout.cshtml";
@@ -7,6 +9,9 @@
     if(ViewBag.ListImg==null){ ListImg = null; }else{ListImg = ViewBag.ListImg;}
     List<Product> ListPro = ViewBag.ListPro;
     int inndex = 1;
+    string jsonStr = Context.Session.GetString("useraccount");
+	User user = null;
+	if (jsonStr != null) user = JsonConvert.DeserializeObject<User>(jsonStr);
 }
 
 <link href="~/css/ProductDetail.css" rel="stylesheet" type="text/css" />
@@ -28,7 +33,9 @@
                                              {
                                                  <div class="carousel-item"> 
                                                   <img src="/myfiles/@i.ImgName" alt="Hills"> 
-                                                  <div class="carousel-caption d-md-block " > <a class="btn btn-danger" href="/batdongsanadmin/xoaimg?id=@i.ImgId" role="button">Xóa </a></div>
+                                                  @if(user!=null&&user.RoleId==1){
+                                                      <div class="carousel-caption d-md-block " > <a class="btn btn-danger" href="/batdongsanadmin/xoaimg?id=@i.ImgId" role="button">Xóa </a></div>
+                                                  }
                                                   </div>
                                              }
                                          }
@@ -51,10 +58,13 @@
                               </div>
                           </div>
                       </div>
-<!--img-->  
+            @if (user!=null&&user.RoleId == 1)
+            {
+                <!--img-->  
                     <form action="/batdongsanadmin/themimgbds?id=@p.ProductId" method="POST" enctype="multipart/form-data"><br>
                         Thêm ảnh (ảnh bé hơn 25MB): <input type="file" name="img" accept=".jpg, .jpeg, .png" placeholder="Image" required> <br><br> <input type="submit" value="thêm">
                     </form>
+            }
                 <br>
                 <p class="chu3">@p.ProductName</p>
                 

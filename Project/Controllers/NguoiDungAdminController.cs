@@ -21,7 +21,7 @@ namespace Project.Controllers
         }
         public IActionResult DanhSach(string sort, int role, string search,int Pageindex, string thongbao,string thongbao2)
         {
-            int Pagesize = 2;
+            int Pagesize = 5;
             string jsonStr = HttpContext.Session.GetString("useraccount");
             User c;
             if (jsonStr is null) c = new User();

@@ -62,7 +62,7 @@ namespace Project.Controllers
                 @"Bấm xác nhận để đăng ký tài khoản: <a href='http://localhost:64224/nguoidung/dangkythongtin?mail=" + codeMail + "' style='color: green;'>Xác Nhận</a>";
 
             Task<string> te = Logic.SendGmail
-               .SendMailGoogleSmtp("traicvhe153014@fpt.edu.vn", mail, "Xác nhận đăng ký", ndEmail, "traicvhe153014@fpt.edu.vn", "12345678");
+               .SendMailGoogleSmtp("traicvhe153014@fpt.edu.vn", mail, "Xác nhận đăng ký", ndEmail, "traicvhe153014@fpt.edu.vn", "0362351671");
             
             return View("/Views/User/CheckMail.cshtml");
         }
@@ -111,7 +111,7 @@ namespace Project.Controllers
                 @"Mật khẩu mới của bạn là: <br>"+ran.ToString();
 
             Task<string> te = Logic.SendGmail
-               .SendMailGoogleSmtp("traicvhe153014@fpt.edu.vn", mail, "Lấy lại mật khẩu", ndEmail, "traicvhe153014@fpt.edu.vn", "12345678");
+               .SendMailGoogleSmtp("traicvhe153014@fpt.edu.vn", mail, "Lấy lại mật khẩu", ndEmail, "traicvhe153014@fpt.edu.vn", "0362351671");
             User user = context.Users.FirstOrDefault(x=>x.Email.Equals(mail));
             user.Password = Logic.coding.Encode(ran.ToString());
             context.Users.Update(user);

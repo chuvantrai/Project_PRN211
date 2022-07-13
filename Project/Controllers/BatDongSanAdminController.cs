@@ -25,6 +25,7 @@ namespace Project.Controllers
             {
                 ViewBag.ListCategory = context.Categories.ToList();
                 ViewBag.ListRegional = context.Regionals.ToList();
+                ViewBag.url = "Thembatdongsan";
                 return View("/Views/Product/ProductDetail.cshtml");
             }
             else
@@ -42,6 +43,7 @@ namespace Project.Controllers
                 ViewBag.ListCategory = context.Categories.ToList();
                 ViewBag.ListRegional = context.Regionals.ToList();
                 ViewBag.thongbao = "Đã thêm BĐS thành công!";
+                ViewBag.url = "Thembatdongsan";
                 return View("/Views/Product/ProductDetail.cshtml");
             }
         }
@@ -53,6 +55,56 @@ namespace Project.Controllers
             context.ImageProducts.Add(p);
             context.SaveChanges();
             return Redirect("~/batdongsan/chitiet?id="+id);
+        }
+        public IActionResult XoaBDS(int id)
+        {
+			if (id == 0) { return View(); }
+            Product p = context.Products.FirstOrDefault(x=>x.ProductId==id);
+            List<ImageProduct> ip = context.ImageProducts.Where(x=>x.ProductId==id).ToList();
+            context.ImageProducts.RemoveRange(ip);
+            context.Products.Remove(p);
+            context.SaveChanges();
+            List<string> listimg = ip.Select(x => x.ImgName).ToList();
+            bool ch = Logic.ExtensionFile.DeleteListImgae(listimg);
+            bool ch2 = Logic.ExtensionFile.DeleteImgae(p.ImgAvar);
+            return Redirect("/batdongsan");
+        }
+        public IActionResult ChinhSuaBDS(int id,string thongbao, string title, int category, int regional, string content,
+            string letterprice, long noprice, string linkggmap, double area, double horizontal, IFormFile img)
+        {
+            Product p = context.Products.FirstOrDefault(x => x.ProductId == id);
+            ViewBag.ListCategory = context.Categories.ToList();
+            ViewBag.ListRegional = context.Regionals.ToList();
+            ViewBag.url = "chinhsuabds";
+            if (string.IsNullOrEmpty(title))
+            {
+                ViewBag.pro = p;
+                if (!string.IsNullOrEmpty(thongbao)) { ViewBag.thongbao = "Đã chỉnh sửa thành công!"; }
+                return View("/Views/Product/ProductDetail.cshtml");
+            }
+            else
+            {
+                if (img != null){
+                    string imageName = Logic.ExtensionFile.AddandUploadImgaeP(img, p.ImgAvar);
+                    p.ImgAvar = imageName;
+                }
+                p.ProductName= title;p.CategoryId= category;p.RegionalId= regional;
+                p.Description= content; p.LetterPrice= letterprice;p.NoPrice= noprice;
+                p.LinkGgmap= linkggmap;p.AreaM2= area; p.HorizontalM= horizontal;
+                context.Products.Update(p);
+                context.SaveChanges();
+                string t2 = "konull";
+                return Redirect("/batdongsanadmin/chinhsuabds?id="+id+"&thongbao="+t2);
+            }
+            
+        }
+        public IActionResult XoaImg(int id)
+        {
+            ImageProduct p = context.ImageProducts.FirstOrDefault(x => x.ImgId == id);
+            context.ImageProducts.Remove(p);
+            context.SaveChanges();
+            bool ch2 = Logic.ExtensionFile.DeleteImgae(p.ImgName);
+            return Redirect("/batdongsan/chitiet?id="+p.ProductId);
         }
     }
 }

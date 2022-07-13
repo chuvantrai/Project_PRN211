@@ -12,7 +12,7 @@ namespace Project.Controllers
         {
             context = new Bds_CShapContext();
         }
-        public IActionResult Index(int id)
+        public IActionResult Index(int id, string thongbao)
         {
             if(id != 0 && id != null)
             {
@@ -25,13 +25,17 @@ namespace Project.Controllers
             else
             {
                 List<News> NewsList = new List<News>();
-                NewsList = context.News.OrderByDescending(x => x.DateUp).ToList();
-                int Pagesize = 2;
+                NewsList = context.News.ToList();
+                int Pagesize = 5;
                 int Pageindex = 1;
                 List<News> NewsListPage = Logic.ExtensionPage.PagingNews(NewsList, Pageindex, Pagesize);
                 ViewBag.NewsList = NewsListPage;
                 ViewBag.PageIndex = Pageindex;
                 ViewBag.PageEnd = Logic.ExtensionPage.PageEnd(NewsList, Pagesize);
+                if (!string.IsNullOrEmpty(thongbao))
+                {
+                    ViewBag.thongbao = "Đã xóa thành công";
+                }
                 return View("/Views/News/NewsList.cshtml");
             }
         }
@@ -44,7 +48,7 @@ namespace Project.Controllers
                 if (sort.Equals("des")) { NewsList = NewsList.OrderByDescending(x => x.DateUp).ToList(); } 
                 else { NewsList = NewsList.OrderBy(x => x.DateUp).ToList(); }
             }
-            int Pagesize = 2;
+            int Pagesize = 5;
             List<News> NewsListPage = Logic.ExtensionPage.PagingNews(NewsList, Pageindex, Pagesize);
             ViewBag.NewsList = NewsListPage;
             ViewBag.PageEnd = Logic.ExtensionPage.PageEnd(NewsList, Pagesize);
