@@ -16,7 +16,7 @@
 	<div class="row">
 		<div class="col-sm-8 chitiet">
 			<h2>@news.Title</h2>
-			<p>ngày: @news.DateUp</p>
+			<p>ngày: @news.DateUp.Day/@news.DateUp.Month/@news.DateUp.Year</p>
 			<p>@Html.Raw(news.Content)</p>
 			
 		</div>
@@ -28,7 +28,7 @@
 					<a href="/tintuc?id=@n.NewsId" class="text-decoration-none">
 						<img src="~/myfiles/@n.ImgAvar" alt="">
 						<h5>@n.Title</h5>
-						<p><ion-icon name="calendar-outline"></ion-icon>@n.DateUp</p>
+						<p><ion-icon name="calendar-outline"></ion-icon>@n.DateUp.Day/@n.DateUp.Month/@n.DateUp.Year</p>
 					</a>
 				</div>
 			}

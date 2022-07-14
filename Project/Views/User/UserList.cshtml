@@ -82,7 +82,7 @@
                       <div class="candidate-list-title">
                         <h5 class="mb-0"><a href="">@u.FullName</a> 
                             @{int yearold = DateTime.Now.Year - u.Dob.Year;}
-                            <span style="color: #969696;font-size: 15px;">  @yearold</span>
+                            <span style="color: #969696;font-size: 15px;">  @yearold tuổi</span>
                         </h5>
                       </div>
                       <div class="candidate-list-option">
@@ -122,8 +122,9 @@
 											@if(u.RoleId ==1){
 												<input type="radio" name="roleuser" value="1" checked/> <span > :admin </span>
 												<input type="radio" name="roleuser" value="2" /><span > :khách hàng </span>
-											}else{<span >admin: </span><input type="radio" name="roleuser" value="1" />
-												<span >khách hàng: </span><input type="radio" name="roleuser" value="2" checked/>}
+											}else{
+												<input type="radio" name="roleuser" value="1" /> <span > :admin </span>
+												<input type="radio" name="roleuser" value="2" checked/><span > :khách hàng </span>}
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>

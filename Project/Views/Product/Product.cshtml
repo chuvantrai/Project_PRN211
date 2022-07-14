@@ -88,6 +88,13 @@
                        {
                            <i class="bi bi-star-fill" style="color: #feba45"></i>
                        }
+                       @foreach (Regional r in ViewBag.listregi)
+                       {
+                            if (p.RegionalId == r.RegionalId)
+                            {
+                                <span style="color: #aaa;float: right;"><i class="bi bi-geo-alt-fill"></i> @r.RegionalName </span>
+                            }
+                        }
                        <h5>@pro.ProductName</h5>
                         <p>Giá: @pro.LetterPrice<i class="bi bi-cash-coin" style="color: #49be25"></i></p>
 

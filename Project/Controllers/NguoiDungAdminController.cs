@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Project.Controllers
 {
-    public class NguoiDungAdminController : Controller
+    public class NguoiDungAdminController : AbstractController
     {
         Bds_CShapContext context;
         public NguoiDungAdminController()
@@ -21,6 +21,8 @@ namespace Project.Controllers
         }
         public IActionResult DanhSach(string sort, int role, string search,int Pageindex, string thongbao,string thongbao2)
         {
+            User ucheck = CheckRoleSession(new int[] { 1 }, true);// true: and, false: or
+
             int Pagesize = 5;
             string jsonStr = HttpContext.Session.GetString("useraccount");
             User c;
@@ -61,6 +63,8 @@ namespace Project.Controllers
         }
         public IActionResult DoiVaiTro(int id, int roleuser)
         {
+            User ucheck = CheckRoleSession(new int[] { 1 }, true);// true: and, false: or
+
             User u = context.Users.FirstOrDefault(x => x.UserId == id);
             u.RoleId= roleuser;
             context.Users.Update(u);
@@ -71,6 +75,8 @@ namespace Project.Controllers
         [HttpPost]
         public IActionResult XoaNguoiDung(int id)
         {
+            User ucheck = CheckRoleSession(new int[] { 1 }, true);// true: and, false: or
+
             User u = context.Users.FirstOrDefault(x=> x.UserId == id);
             context.Users.Remove(u);
             context.SaveChanges();

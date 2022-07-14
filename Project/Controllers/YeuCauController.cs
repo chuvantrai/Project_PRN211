@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Project.Controllers
 {
-    public class YeuCauController : Controller
+    public class YeuCauController : AbstractController
     {
         Bds_CShapContext context;
         public YeuCauController()
@@ -20,6 +20,8 @@ namespace Project.Controllers
         }
         public IActionResult GuiYeuCau(string content)
         {
+            User ucheck = CheckRoleSession(new int[] { 1 }, true);// true: and, false: or
+
             string jsonStr = HttpContext.Session.GetString("useraccount");
             User user;
             if (jsonStr is null) user = new User();

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Project.Controllers
 {
-    public class TinTucAdminController : Controller
+    public class TinTucAdminController : AbstractController
     {
         Bds_CShapContext context;
         public TinTucAdminController()
@@ -20,6 +20,9 @@ namespace Project.Controllers
         
         public IActionResult ThemTinTuc(string title,DateTime date,string content, IFormFile img)
         {
+            // check role
+            User ucheck = CheckRoleSession(new int[] {1} , true);// true: and, false: or
+
             if (title == null|| string.IsNullOrEmpty(content)) { ViewBag.url = "themtintuc"; return View("/Views/News/NewsDetail.cshtml"); }
             if (date == null) { date = DateTime.Now; }
             News news = new News();
@@ -37,6 +40,8 @@ namespace Project.Controllers
 
         public IActionResult ChinhSuaTinTuc(int id, string title, DateTime date, string content, IFormFile img)
         {
+            User ucheck = CheckRoleSession(new int[] { 1 }, true);// true: and, false: or
+
             if (id == 0)
             {
                 ViewBag.url = "themtintuc";
@@ -73,7 +78,9 @@ namespace Project.Controllers
 
         public IActionResult XoaTinTuc(int id)
         {
-			if (id == 0)
+            User ucheck = CheckRoleSession(new int[] { 1 }, true);// true: and, false: or
+
+            if (id == 0)
 			{
                 return View();
 			}

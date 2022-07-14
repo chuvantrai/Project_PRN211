@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Project.Controllers
 {
-    public class BatDongSanAdminController : Controller
+    public class BatDongSanAdminController : AbstractController
     {
         Bds_CShapContext context;
         public BatDongSanAdminController()
@@ -16,11 +16,15 @@ namespace Project.Controllers
         }
         public IActionResult Index()
         {
+            User ucheck = CheckRoleSession(new int[] { 1 }, true);// true: and, false: or
+
             return View("/Views/Product/ProductDetail.cshtml");
         }
         public IActionResult ThemBatDongSan(string title,int category,int regional, string content, 
             string letterprice, long noprice, string linkggmap, double area, double horizontal, IFormFile img)
         {
+            User ucheck = CheckRoleSession(new int[] { 1 }, true);// true: and, false: or
+
             if (string.IsNullOrEmpty(title)|| string.IsNullOrEmpty(content))
             {
                 ViewBag.ListCategory = context.Categories.ToList();
@@ -49,6 +53,8 @@ namespace Project.Controllers
         }
         public IActionResult ThemImgBDS(int id, IFormFile img)
         {
+            User ucheck = CheckRoleSession(new int[] { 1 }, true);// true: and, false: or
+
             ImageProduct p = new ImageProduct();
             p.ImgName = Logic.ExtensionFile.AddnewImgae(img);
             p.ProductId = id;
@@ -58,7 +64,9 @@ namespace Project.Controllers
         }
         public IActionResult XoaBDS(int id)
         {
-			if (id == 0) { return View(); }
+            User ucheck = CheckRoleSession(new int[] { 1 }, true);// true: and, false: or
+
+            if (id == 0) { return View(); }
             Product p = context.Products.FirstOrDefault(x=>x.ProductId==id);
             List<ImageProduct> ip = context.ImageProducts.Where(x=>x.ProductId==id).ToList();
             context.ImageProducts.RemoveRange(ip);
@@ -67,11 +75,13 @@ namespace Project.Controllers
             List<string> listimg = ip.Select(x => x.ImgName).ToList();
             bool ch = Logic.ExtensionFile.DeleteListImgae(listimg);
             bool ch2 = Logic.ExtensionFile.DeleteImgae(p.ImgAvar);
-            return Redirect("/batdongsan");
+            return Redirect("/batdongsan?thongbao=konull");
         }
         public IActionResult ChinhSuaBDS(int id,string thongbao, string title, int category, int regional, string content,
             string letterprice, long noprice, string linkggmap, double area, double horizontal, IFormFile img)
         {
+            User ucheck = CheckRoleSession(new int[] { 1 }, true);// true: and, false: or
+
             Product p = context.Products.FirstOrDefault(x => x.ProductId == id);
             ViewBag.ListCategory = context.Categories.ToList();
             ViewBag.ListRegional = context.Regionals.ToList();
@@ -100,6 +110,8 @@ namespace Project.Controllers
         }
         public IActionResult XoaImg(int id)
         {
+            User ucheck = CheckRoleSession(new int[] { 1 }, true);// true: and, false: or
+
             ImageProduct p = context.ImageProducts.FirstOrDefault(x => x.ImgId == id);
             context.ImageProducts.Remove(p);
             context.SaveChanges();

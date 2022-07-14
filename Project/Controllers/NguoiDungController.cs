@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Project.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Project.Controllers
 {
-    public class NguoiDungController : Controller
+    public class NguoiDungController : AbstractController
     {
         Bds_CShapContext context;
         public NguoiDungController()
@@ -19,6 +20,9 @@ namespace Project.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+        public IActionResult Eror(){
+            return View("/Views/404.cshtml");
         }
         public IActionResult DangNhap()
         {
@@ -51,11 +55,19 @@ namespace Project.Controllers
         }
         public IActionResult DangXuat()
         {
+            User ucheck = CheckRoleSession(new int[] { 1,2 }, false);// true: and, false: or
+
             HttpContext.Session.Remove("useraccount");
             return Redirect("/trangchu/index");
         }
         public IActionResult CheckMail(string mail)
         {
+            List<User> u = context.Users.Where(x => x.Email.Equals(mail)).ToList();
+            if(u.Count != 0)
+            {
+                ViewBag.thongbao2 = "Email đã đăng ký!";
+                return View("/Views/User/CheckMail.cshtml");
+            }
             ViewBag.thongbao = "Hãy xác nhận trong Mail của bạn!";
             string codeMail = Logic.coding.Encode(mail);
             string ndEmail =
@@ -122,10 +134,14 @@ namespace Project.Controllers
 
         public IActionResult Doimatkhau()
         {
+            User ucheck = CheckRoleSession(new int[] { 1, 2 }, false);// true: and, false: or
+
             return View("/Views/User/ChangePassword.cshtml");
         }
         public IActionResult Dodoimatkhau(string oldpassword,string newpassword1,string newpassword2)
         {
+            User ucheck = CheckRoleSession(new int[] { 1, 2 }, false);// true: and, false: or
+
             string jsonStr = HttpContext.Session.GetString("useraccount");
             User user;
             if (jsonStr is null) user = new User();
@@ -153,11 +169,15 @@ namespace Project.Controllers
         }
         public IActionResult Thongtincanhan()
         {
+            User ucheck = CheckRoleSession(new int[] { 1, 2 }, false);// true: and, false: or
+
             return View("/Views/User/Profile.cshtml");
         }
         [HttpPost]
         public IActionResult DoThongtincanhan(IFormFile myfile,string fullname, string phone,DateTime dob,bool gender)
         {
+            User ucheck = CheckRoleSession(new int[] { 1, 2 }, false);// true: and, false: or
+
             string jsonStr = HttpContext.Session.GetString("useraccount");
             User user = null;
             if (jsonStr != null) user = JsonConvert.DeserializeObject<User>(jsonStr);

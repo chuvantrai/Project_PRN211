@@ -216,4 +216,43 @@
 			</ul>
 		</nav>
 </div>
+@if(ViewBag.thongbao!=null){
 
+    @*thông báo*@
+        <div class="container thongbao" id="thongbao1" >
+			<div class="row" style="display: block">
+				<div class="col">
+				</div>
+				<div class="col-8">
+					<div class="alert alert-info alert-dismissible fade show" id='tempAlert' role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<strong> <i class="bi bi-check-circle-fill"></i> </strong> @ViewBag.thongbao
+					</div>
+				</div>
+				<div class="col">
+				</div>
+			</div>
+		</div>
+
+<style>
+.thongbao{
+        text-decoration: none;
+        position: fixed;
+        top:24px;
+        left: 100px;
+        color: #fe9d15;
+        transition: all ease 0.4s;
+        border-radius: 40px;
+        z-index: 999;
+        margin-left: 150px
+}
+</style>
+<script>
+setTimeout(function () {
+    document.getElementById('thongbao1').classList.add("hide");
+    document.getElementById('thongbao1').style.display = 'none';
+}, 4000);
+</script>
+}

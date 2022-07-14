@@ -58,7 +58,7 @@
 				<li class="nav-item">
 					<a class="nav-link" href="/tintuc">Tin Tức</a>
 				</li>
-				@if (user.RoleId == 2)
+				@if (user != null&&user.RoleId == 2)
 					{
 					<li class="nav-item">
 						<a class="nav-link" data-toggle="modal" href="" data-target="#exampleModal">Tư Vấn/Hỗ Trợ</a>

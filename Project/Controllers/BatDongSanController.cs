@@ -12,7 +12,7 @@ namespace Project.Controllers
         {
             context = new Bds_CShapContext();
         }
-        public IActionResult Index(int category,int regional, string sort, string price, int Pageindex)
+        public IActionResult Index(int category,int regional, string sort, string price, int Pageindex, string thongbao)
         {
             int Pagesize = 6;// size page
             ViewBag.ListCate = context.Categories.ToList();
@@ -27,6 +27,7 @@ namespace Project.Controllers
                 List<Product> pro = context.Products.OrderByDescending(x=>x.DateUp).ToList();
                 ViewBag.ListPro = Logic.ExtensionPage.PagingProduct(pro, 1, Pagesize);
                 ViewBag.PageEnd = Logic.ExtensionPage.PageEndProduct(pro, 1);
+                if (thongbao != null) { ViewBag.thongbao = "Đã xóa thành công!"; }
                 return View("/Views/Product/ProductList.cshtml");
             }
             else
@@ -62,7 +63,7 @@ namespace Project.Controllers
             {
                 ViewBag.ListImg = context.ImageProducts.Where(x => x.ProductId == id).ToList();
             }
-            
+            ViewBag.listregi = context.Regionals.ToList();
             ViewBag.ListPro = context.Products.Where(x=>x.ProductId!=id&&x.RegionalId==pro.RegionalId).Skip(0).Take(3).ToList();
             return View("/Views/Product/Product.cshtml");
         }
